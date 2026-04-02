@@ -1,20 +1,38 @@
 # ReconScan
-# ReconScan - Outil OSINT de Recherche de Pseudo et Email
+# ReconScan - Outil OSINT Complet de Recherche de Pseudo et Email
 
-![Version](https://img.shields.io/badge/version-2.0-blue.svg)
+![Version](https://img.shields.io/badge/version-3.0-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.7+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## 🎯 Description
 
-**ReconScan** est un outil OSINT (Open Source Intelligence) complet conçu pour :
+**ReconScan** est une suite OSINT (Open Source Intelligence) complète et puissante conçue pour les investigations numériques. Elle intègre de multiples fonctionnalités avancées :
 
-1. **Recherche par pseudo** : Trouver la présence d'un utilisateur à travers internet en utilisant son pseudo/surnom. Il vérifie automatiquement la disponibilité d'un pseudo sur plus de **94 plateformes différentes**.
+### 🔍 Recherche par pseudo
+Trouver la présence d'un utilisateur sur plus de **94 plateformes** différentes avec analyse approfondie.
 
-2. **Recherche par email** : Analyser une adresse email pour trouver :
-   - Les fuites de données associées (via HaveIBeenPwned)
-   - Le profil Gravatar et les comptes sociaux liés
-   - Les informations sur le domaine de l'email
+### 📧 Recherche par email
+Analyser une adresse email pour découvrir :
+- Fuites de données (HaveIBeenPwned)
+- Profil Gravatar et comptes sociaux associés
+- Informations sur le domaine
+
+### 🔄 Recherche inversée de pseudo
+- Analyse des patterns de noms d'utilisateur
+- Génération de variations probables
+- Corrélation entre différents comptes
+
+### 🎯 Deep Scan (Mode approfondi)
+- Extraction détaillée des profils (bio, followers, liens)
+- Détection des technologies utilisées
+- Analyse des métadonnées
+- Vérification des fichiers spéciaux (robots.txt, sitemap.xml, etc.)
+
+### 📊 Export avancé
+- Rapports HTML interactifs avec graphiques
+- Export CSV pour analyse Excel
+- Export JSON pour intégration API
 
 ## ⚠️ Avertissement Important
 
@@ -108,57 +126,54 @@ chmod +x email_scanner.py
 
 ## 📖 Utilisation
 
-### Recherche par pseudo
+### 🎯 Commandes principales
 
-**Commande de base :**
+#### Recherche par pseudo
 ```bash
 python reconscan.py pseudo_a_rechercher
 ```
 
-**Exemples d'utilisation :**
-
-Recherche simple :
-```bash
-python reconscan.py john_doe
-```
-
-Export en JSON avec nom de fichier personnalisé :
-```bash
-python reconscan.py test_user --format json --output rapport_test.json
-```
-
-Recherche avec paramètres avancés :
-```bash
-python reconscan.py username --timeout 15 --concurrent 5
-```
-
-Mode silencieux (pour scripts) :
-```bash
-python reconscan.py pseudo --quiet --no-save
-```
-
-### Recherche par email
-
-**Commande de base :**
+#### Recherche par email
 ```bash
 python reconscan.py --email cible@example.com
 ```
 
-**Exemples d'utilisation :**
-
-Analyse complète d'un email :
+#### Deep Scan (analyse approfondie)
 ```bash
-python reconscan.py --email target@gmail.com
+python deep_scanner.py https://github.com/username
 ```
 
-Export en JSON :
+#### Recherche inversée de pseudo
 ```bash
-python reconscan.py --email user@domain.com --format json
+python username_correlator.py pseudo_a_analyser
 ```
 
-Avec timeout personnalisé :
+### 📋 Exemples détaillés
+
+**Recherche simple par pseudo :**
 ```bash
-python reconscan.py --email test@yahoo.com --timeout 15
+python reconscan.py john_doe
+```
+
+**Recherche avec export HTML :**
+```bash
+python reconscan.py test_user --format json
+python -c "from advanced_exporter import AdvancedExporter; import json; data=json.load(open('report_username_*.json')); AdvancedExporter(data, 'username').export_html()"
+```
+
+**Analyse complète d'email :**
+```bash
+python reconscan.py --email target@gmail.com --format json
+```
+
+**Deep Scan d'une URL :**
+```bash
+python deep_scanner.py https://github.com/username https://reddit.com/user/username
+```
+
+**Corrélation de pseudos :**
+```bash
+python username_correlator.py john_doe_123
 ```
 
 ### Options disponibles
@@ -174,7 +189,16 @@ python reconscan.py --email test@yahoo.com --timeout 15
 | `-q, --quiet` | Mode silencieux | false |
 | `--no-save` | Ne pas sauvegarder le rapport | false |
 
-## 📊 Structure du Rapport
+### 📊 Modules avancés
+
+| Module | Description |
+|--------|-------------|
+| `deep_scanner.py` | Analyse approfondie des profils et détection de technologies |
+| `username_correlator.py` | Recherche inversée et corrélation de pseudos |
+| `email_scanner.py` | Analyse d'emails (fuites, Gravatar, réseaux) |
+| `advanced_exporter.py` | Export HTML/CSV avec graphiques interactifs |
+
+## 📊 Structure des Rapports
 
 ### Rapport de recherche par pseudo (JSON)
 ```json
@@ -215,6 +239,31 @@ python reconscan.py --email test@yahoo.com --timeout 15
 }
 ```
 
+### Rapport Deep Scan (JSON)
+```json
+{
+  "timestamp": "2024-02-04 15:30:00",
+  "total_urls": 1,
+  "results": [{
+    "url": "https://github.com/user",
+    "status": 200,
+    "profile_data": {
+      "title": "User's Profile",
+      "bio": "Developer...",
+      "followers": "1.2k",
+      "social_links": [...]
+    },
+    "technologies": [
+      {"name": "React", "type": "framework"},
+      {"name": "GitHub Pages", "type": "hosting"}
+    ],
+    "files_found": [
+      {"file": "robots.txt", "exists": true}
+    ]
+  }]
+}
+```
+
 ## 🔧 Configuration Avancée
 
 ### Ajout de nouvelles plateformes
@@ -232,26 +281,40 @@ PLATFORMS = {
 }
 ```
 
-### Ajout de nouvelles sources pour l'email scanner
+### Configuration de l'API HaveIBeenPwned
 
-Pour ajouter de nouvelles sources d'analyse email, modifiez `email_scanner.py` :
-
-```python
-async def check_nouvelle_source(self, session):
-    """Vérifie une nouvelle source de données"""
-    print(f"\n{Fore.CYAN}🔍 Vérification nouvelle source...{Style.RESET_ALL}")
-    # Votre code ici
-```
-
-### Utilisation avec une clé API HaveIBeenPwned
-
-Pour éviter les limitations de rate limiting, vous pouvez obtenir une clé API gratuite sur [HaveIBeenPwned](https://haveibeenpwned.com/API/Key) et la configurer dans `email_scanner.py` :
+Pour éviter les limitations de rate limiting, obtenez une clé API gratuite sur [HaveIBeenPwned](https://haveibeenpwned.com/API/Key) et configurez-la dans `email_scanner.py` :
 
 ```python
 headers = {
     "user-agent": "ReconScan-OSINT-Tool",
     "hibp-api-key": "VOTRE_CLE_API"
 }
+```
+
+### Personnalisation du Deep Scanner
+
+Pour ajouter des technologies à détecter, modifiez `deep_scanner.py` :
+
+```python
+tech_patterns = {
+    "VotreFramework": r'votre-pattern',
+    "VotreCMS": r'votre-cms',
+    # Ajoutez vos patterns ici
+}
+```
+
+### Création de rapports personnalisés
+
+Utilisez `advanced_exporter.py` pour générer des rapports dans différents formats :
+
+```python
+from advanced_exporter import AdvancedExporter
+
+exporter = AdvancedExporter(data, "username")
+exporter.export_html("rapport.html")
+exporter.export_csv("rapport.csv")
+exporter.export_json("rapport.json")
 ```
 
 ## ⚡ Performance
@@ -273,6 +336,11 @@ headers = {
 2. **Gravatar** : Nécessite que l'utilisateur ait un compte Gravatar
 3. **Données partielles** : Certaines fuites ne sont pas publiques
 4. **Emails jetables** : Les emails temporaires ne donnent pas de résultats
+
+### Deep Scan
+1. **Analyse statique** : L'analyse HTML ne capture pas le contenu dynamique (JavaScript)
+2. **Anti-bot** : Certains sites bloquent les scanners automatiques
+3. **Performance** : L'analyse approfondie est plus lente que le scan simple
 
 ## 🔒 Confidentialité et Éthique
 
@@ -296,6 +364,23 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 - Corriger des bugs
 - Améliorer la documentation
 
+## 🏗️ Architecture du projet
+
+```
+ReconScan/
+├── reconscan.py           # Script principal (pseudo + email)
+├── email_scanner.py       # Module d'analyse d'emails
+├── deep_scanner.py        # Module de deep scan
+├── username_correlator.py # Module de corrélation de pseudos
+├── advanced_exporter.py   # Module d'export avancé
+├── requirements.txt       # Dépendances Python
+├── README.md             # Ce fichier
+├── LICENCE.txt           # Licence MIT
+├── install.sh            # Script d'installation
+├── config.json           # Configuration
+└── .gitignore            # Exclusions Git
+```
+
 ## 📄 Licence
 
 MIT License - Voir le fichier LICENCE.txt pour plus de détails.
@@ -311,6 +396,11 @@ MIT License - Voir le fichier LICENCE.txt pour plus de détails.
 ---
 
 **⚠️ RAPPEL** : Utilisez cet outil de manière responsable et éthique. Le respect de la vie privée d'autrui est primordial.
+
+**🔗 Liens utiles :**
+- [GitHub Repository](https://github.com/cheickfaza/ReconScan)
+- [HaveIBeenPwned API](https://haveibeenpwned.com/API/Key)
+- [Gravatar API](https://en.gravatar.com/site/implement/images/)
 </content>
 <task_progress>
 - [x] Analyser le projet actuel
