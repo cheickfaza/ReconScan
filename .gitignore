@@ -1,0 +1,27 @@
+# Environnement virtuel Python
+venv/
+.venv/
+
+# Rapports générés
+*.json
+*.txt
+reports/
+
+# Fichiers de cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
