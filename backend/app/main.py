@@ -45,9 +45,9 @@ def create_app() -> FastAPI:
     # Serve frontend static files
     frontend_path = Path(__file__).parent.parent.parent / "frontend"
     if frontend_path.exists():
-        app.mount("/static", StaticFiles(directory=str(frontend_path / "css"), html=False), path="/static/css")
-        app.mount("/static", StaticFiles(directory=str(frontend_path / "js"), html=False), path="/static/js")
-        app.mount("/static", StaticFiles(directory=str(frontend_path / "assets"), html=False), path="/static/assets")
+        app.mount("/static/css", StaticFiles(directory=str(frontend_path / "css")), name="css")
+        app.mount("/static/js", StaticFiles(directory=str(frontend_path / "js")), name="js")
+        app.mount("/static/assets", StaticFiles(directory=str(frontend_path / "assets")), name="assets")
     
     # Startup event
     @app.on_event("startup")

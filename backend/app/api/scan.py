@@ -6,9 +6,11 @@ import asyncio
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.database import get_db
+from app.models.scan import ScanResult
 from app.schemas.scan import (
     ScanRequest,
     ScanResponse,
@@ -80,6 +82,12 @@ async def get_scan(
     if not scan:
         raise HTTPException(status_code=404, detail="Scan non trouvé")
     
+    # Charger les résultats de manière asynchrone
+    await db.execute(
+        select(ScanResult).where(ScanResult.scan_id == scan.id)
+    )
+    scan_results = scan.results
+    
     results = [
         ScanResultResponse(
             id=r.id,
@@ -91,7 +99,7 @@ async def get_scan(
             data=r.data,
             error_message=r.error_message
         )
-        for r in scan.results
+        for r in scan_results
     ]
     
     return ScanResponse(
