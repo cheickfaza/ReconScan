@@ -35,8 +35,6 @@ env/
 
 # Reports
 reports/
-*.json
-*.html
 *.csv
 reconscan_*.txt
 

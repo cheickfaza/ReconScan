@@ -1,0 +1,347 @@
+{
+  "settings": {
+    "default_timeout": 10,
+    "max_concurrent_requests": 10,
+    "delay_between_requests": 0.2,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "follow_redirects": true
+  },
+  "platforms": {
+    "social_media": {
+      "GitHub": {
+        "url": "https://api.github.com/users/{}",
+        "type": "api",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Twitter/X": {
+        "url": "https://nitter.net/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Reddit": {
+        "url": "https://www.reddit.com/user/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Instagram": {
+        "url": "https://www.instagram.com/{}/",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Facebook": {
+        "url": "https://www.facebook.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "TikTok": {
+        "url": "https://www.tiktok.com/@{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "LinkedIn": {
+        "url": "https://www.linkedin.com/in/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "development": {
+      "GitLab": {
+        "url": "https://gitlab.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Stack Overflow": {
+        "url": "https://stackoverflow.com/users/tagged/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Dev.to": {
+        "url": "https://dev.to/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "CodePen": {
+        "url": "https://codepen.io/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "npm": {
+        "url": "https://www.npmjs.com/~{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "PyPI": {
+        "url": "https://pypi.org/user/{}/",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "forums_communities": {
+      "4chan": {
+        "url": "https://boards.4channel.org/search/post?q={}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Quora": {
+        "url": "https://www.quora.com/profile/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Medium": {
+        "url": "https://medium.com/@{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Tumblr": {
+        "url": "https://{}.tumblr.com/",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "VK": {
+        "url": "https://vk.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "gaming": {
+      "Steam": {
+        "url": "https://steamcommunity.com/id/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Twitch": {
+        "url": "https://api.twitch.tv/helix/users?login={}",
+        "type": "api",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Xbox": {
+        "url": "https://xboxgamertag.com/search/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "PlayStation": {
+        "url": "https://psnprofiles.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Discord": {
+        "url": "https://discord.com",
+        "type": "special",
+        "note": "Recherche manuelle requise",
+        "enabled": true
+      }
+    },
+    "messaging": {
+      "Gmail": {
+        "url": "https://mail.google.com",
+        "type": "special",
+        "note": "Vérification manuelle requise",
+        "enabled": true
+      },
+      "ProtonMail": {
+        "url": "https://protonmail.com",
+        "type": "special",
+        "note": "Vérification manuelle requise",
+        "enabled": true
+      },
+      "Telegram": {
+        "url": "https://t.me/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Signal": {
+        "url": "https://signal.org",
+        "type": "special",
+        "note": "Vérification manuelle requise",
+        "enabled": true
+      },
+      "WhatsApp": {
+        "url": "https://wa.me/",
+        "type": "special",
+        "note": "Vérification manuelle requise",
+        "enabled": true
+      },
+      "Skype": {
+        "url": "https://join.skype.com",
+        "type": "special",
+        "note": "Vérification manuelle requise",
+        "enabled": true
+      }
+    },
+    "media_entertainment": {
+      "Pinterest": {
+        "url": "https://www.pinterest.com/{}/",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "SoundCloud": {
+        "url": "https://soundcloud.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Spotify": {
+        "url": "https://open.spotify.com/user/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "YouTube": {
+        "url": "https://www.youtube.com/@{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Vimeo": {
+        "url": "https://vimeo.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Flickr": {
+        "url": "https://www.flickr.com/people/{}/",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "500px": {
+        "url": "https://500px.com/p/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "creative_professional": {
+      "Behance": {
+        "url": "https://www.behance.net/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Dribbble": {
+        "url": "https://dribbble.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "About.me": {
+        "url": "https://about.me/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Linktree": {
+        "url": "https://linktr.ee/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Patreon": {
+        "url": "https://www.patreon.com/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "financial": {
+      "Cash App": {
+        "url": "https://cash.app/${}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      },
+      "Venmo": {
+        "url": "https://account.venmo.com/u/{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "crypto_security": {
+      "Keybase": {
+        "url": "https://keybase.io/{}",
+        "type": "api",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    },
+    "decentralized": {
+      "Mastodon": {
+        "url": "https://mastodon.social/@{}",
+        "type": "web",
+        "method": "GET",
+        "status_code": 200,
+        "enabled": true
+      }
+    }
+  },
+  "output": {
+    "default_format": "json",
+    "auto_save": true,
+    "save_directory": "./reports",
+    "include_timestamp": true,
+    "verbose": false
+  }
+}

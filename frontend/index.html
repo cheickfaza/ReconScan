@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReconScan - Dashboard OSINT</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>🔍 ReconScan</h1>
+                <p>OSINT Dashboard</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="dashboard">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="username">
+                    <span class="icon">👤</span>
+                    <span>Recherche Pseudo</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="email">
+                    <span class="icon">📧</span>
+                    <span>Recherche Email</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="deep-scan">
+                    <span class="icon">🎯</span>
+                    <span>Deep Scan</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="correlation">
+                    <span class="icon">🔄</span>
+                    <span>Corrélation</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="history">
+                    <span class="icon">📜</span>
+                    <span>Historique</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>v4.0.0</p>
+                <a href="/api/docs" target="_blank">API Docs</a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h2 id="page-title">Dashboard</h2>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refresh-btn">🔄 Rafraîchir</button>
+                </div>
+            </header>
+            
+            <!-- Dashboard Tab -->
+            <section id="dashboard-tab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🔍</div>
+                        <div class="stat-info">
+                            <h3 id="total-scans">0</h3>
+                            <p>Total Scans</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3 id="found-count">0</h3>
+                            <p>Comptes Trouvés</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-info">
+                            <h3 id="error-count">0</h3>
+                            <p>Erreurs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <h3 id="avg-time">0s</h3>
+                            <p>Temps Moyen</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Répartition par Type</h3>
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Résultats par Jour</h3>
+                        <canvas id="resultsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="recent-scans">
+                    <h3>Derniers Scans</h3>
+                    <div id="recent-scans-list"></div>
+                </div>
+            </section>
+            
+            <!-- Username Search Tab -->
+            <section id="username-tab" class="tab-content">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="username-input">Pseudo à rechercher</label>
+                        <input type="text" id="username-input" placeholder="Entrez un pseudo..." />
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" id="deep-scan-check" />
+                            Activer Deep Scan
+                        </label>
+                        <label>
+                            Timeout: <input type="number" id="timeout-input" value="10" min="1" max="60" />
+                        </label>
+                    </div>
+                    <button class="btn btn-primary" id="start-username-scan">🔍 Lancer la recherche</button>
+                </div>
+                
+                <div class="progress-bar" id="username-progress" style="display: none;">
+                    <div class="progress-fill"></div>
+                </div>
+                
+                <div id="username-results" class="results-container"></div>
+            </section>
+            
+            <!-- Email Search Tab -->
+            <section id="email-tab" class="tab-content">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="email-input">Email à analyser</label>
+                        <input type="email" id="email-input" placeholder="entrez@email.com" />
+                    </div>
+                    <button class="btn btn-primary" id="start-email-scan">📧 Lancer l'analyse</button>
+                </div>
+                
+                <div id="email-results" class="results-container"></div>
+            </section>
+            
+            <!-- Deep Scan Tab -->
+            <section id="deep-scan-tab" class="tab-content">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="url-input">URL(s) à analyser</label>
+                        <textarea id="url-input" placeholder="https://github.com/username&#10;https://reddit.com/user/username" rows="4"></textarea>
+                    </div>
+                    <button class="btn btn-primary" id="start-deep-scan">🎯 Lancer le Deep Scan</button>
+                </div>
+                
+                <div id="deep-scan-results" class="results-container"></div>
+            </section>
+            
+            <!-- Correlation Tab -->
+            <section id="correlation-tab" class="tab-content">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="correlation-input">Pseudo à corréler</label>
+                        <input type="text" id="correlation-input" placeholder="Entrez un pseudo..." />
+                    </div>
+                    <button class="btn btn-primary" id="start-correlation">🔄 Lancer la corrélation</button>
+                </div>
+                
+                <div id="correlation-results" class="results-container"></div>
+            </section>
+            
+            <!-- History Tab -->
+            <section id="history-tab" class="tab-content">
+                <div class="history-filters">
+                    <select id="history-type-filter">
+                        <option value="">Tous les types</option>
+                        <option value="username">Pseudo</option>
+                        <option value="email">Email</option>
+                        <option value="deep_scan">Deep Scan</option>
+                    </select>
+                </div>
+                
+                <div id="history-list" class="history-list"></div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+    
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
