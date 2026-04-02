@@ -113,20 +113,39 @@ git clone https://github.com/cheickfaza/ReconScan.git
 cd ReconScan
 ```
 
-2. **Installer les dépendances**
+2. **Installer les dépendances CLI**
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Rendre le script exécutable** (optionnel)
+3. **Installer les dépendances du backend**
+```bash
+cd backend
+pip install -r requirements.txt
+cd ..
+```
+
+4. **Rendre les scripts exécutables** (optionnel)
 ```bash
 chmod +x reconscan.py
-chmod +x email_scanner.py
+chmod +x backend/run.py
 ```
 
 ## 📖 Utilisation
 
-### 🎯 Commandes principales
+### 🖥️ Dashboard Web (Recommandé)
+
+**Lancer le serveur avec dashboard:**
+```bash
+cd backend
+python run.py
+```
+
+Puis ouvrir:
+- Dashboard: http://localhost:8000
+- API Docs: http://localhost:8000/api/docs
+
+### 🎯 Commandes CLI
 
 #### Recherche par pseudo
 ```bash
