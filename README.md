@@ -1,3 +1,4 @@
+# ReconScan
 # ReconScan - Outil OSINT de Recherche de Pseudo
 
 ![Version](https://img.shields.io/badge/version-1.0-blue.svg)
@@ -6,7 +7,7 @@
 
 ## 🎯 Description
 
-**ReconScan** est un outil OSINT (Open Source Intelligence) conçu pour rechercher la présence d'un utilisateur à travers internet en utilisant son pseudo/surnom. Il vérifie automatiquement la disponibilité d'un pseudo sur plus de **80 plateformes différentes**, incluant les réseaux sociaux, les plateformes de hacking éthique, de développement, et bien plus encore.
+**ReconScan** est un outil OSINT (Open Source Intelligence) conçu pour rechercher la présence d'un utilisateur à travers internet en utilisant son pseudo/surnom. Il vérifie automatiquement la disponibilité d'un pseudo sur plus de **94 plateformes différentes**, incluant les réseaux sociaux, les plateformes de hacking éthique, de développement, et bien plus encore.
 
 ## ⚠️ Avertissement Important
 
@@ -20,7 +21,7 @@ Cet outil est destiné **uniquement** à des fins :
 
 ## ✨ Fonctionnalités
 
-- 🔍 **Recherche multi-plateformes** : Vérifie plus de 80 plateformes
+- 🔍 **Recherche multi-plateformes** : Vérifie plus de 94 plateformes
 - ⚡ **Recherche asynchrone** : Rapide et efficace
 - 📊 **Rapports détaillés** : Export en JSON ou texte
 - 🎨 **Interface colorée** : Affichage clair des résultats
@@ -81,9 +82,10 @@ Cet outil est destiné **uniquement** à des fins :
 
 ### Étapes d'installation
 
-1. **Cloner le repository** (si applicable) ou télécharger les fichiers
+1. **Cloner le repository**
 ```bash
-cd /chemin/vers/ReconScan
+git clone https://github.com/votre-utilisateur/ReconScan.git
+cd ReconScan
 ```
 
 2. **Installer les dépendances**
@@ -145,7 +147,7 @@ python reconscan.py pseudo --quiet --no-save
   "username": "pseudo_recherché",
   "timestamp": "2024-02-04 15:30:00",
   "summary": {
-    "total_platforms": 45,
+    "total_platforms": 94,
     "found": 12,
     "not_found": 30,
     "errors": 3
@@ -158,9 +160,6 @@ python reconscan.py pseudo --quiet --no-save
 }
 ```
 
-### Format Texte
-Rapport lisible avec résumé et liste des plateformes trouvées.
-
 ## 🔧 Configuration Avancée
 
 ### Ajout de nouvelles plateformes
@@ -170,20 +169,13 @@ Pour ajouter une plateforme, modifiez le dictionnaire `PLATFORMS` dans `reconsca
 ```python
 PLATFORMS = {
     "NomPlateforme": {
-        "url": "https://exemple.com/{}",  # {} sera remplacé par le pseudo
-        "type": "web",  # ou "api" ou "special"
+        "url": "https://exemple.com/{}",
+        "type": "web",
         "method": "GET",
-        "status_code": 200  # Code HTTP indiquant que le compte existe
+        "status_code": 200
     },
-    # ... autres plateformes
 }
 ```
-
-### Types de plateformes
-
-- **web** : Site web standard (détection par code HTTP)
-- **api** : API avec réponse structurée
-- **special** : Nécessite une vérification manuelle
 
 ## ⚡ Performance
 
@@ -191,16 +183,12 @@ PLATFORMS = {
 - **Contrôle** : Limite le nombre de requêtes concurrentes pour éviter le blocage
 - **Respect** : Inclut des délais entre les requêtes pour ne pas surcharger les serveurs
 
-## 🛡️ Limitations et Considérations
+## 🛡️ Limitations
 
 1. **Faux positifs** : Certaines plateformes peuvent retourner 200 même pour des comptes inexistants
 2. **Rate limiting** : Les plateformes peuvent bloquer les requêtes trop nombreuses
 3. **Comptes privés** : Certains comptes existent mais sont privés/inaccessibles
 4. **Évolution des sites** : Les URLs et structures peuvent changer
-
-## 🔄 Mises à jour
-
-Pour mettre à jour la liste des plateformes, modifiez simplement le dictionnaire `PLATFORMS` dans le fichier `reconscan.py`.
 
 ## 🤝 Contribution
 
@@ -212,17 +200,13 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 
 ## 📄 Licence
 
-MIT License - Voir le fichier LICENSE pour plus de détails.
+MIT License - Voir le fichier LICENCE.txt pour plus de détails.
 
 ## 🙏 Remerciements
 
 - À la communauté OSINT pour l'inspiration
 - Aux mainteneurs des différentes API utilisées
 - À tous les contributeurs
-
-## 📞 Support
-
-Pour toute question ou problème, ouvrez une issue sur le repository.
 
 ---
 
