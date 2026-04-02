@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ReconScan - Outil OSINT de recherche de pseudo
+ReconScan - Outil OSINT de recherche de pseudo et email
 Permet de trouver la présence d'un utilisateur sur différentes plateformes
 """
 
@@ -14,6 +14,8 @@ from pathlib import Path
 
 import aiohttp
 from colorama import init, Fore, Style
+
+from email_scanner import EmailScanner
 
 # Initialiser colorama
 init(autoreset=True)
@@ -796,19 +798,26 @@ class ReconScan:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="ReconScan - Outil OSINT de recherche de pseudo",
+        description="ReconScan - Outil OSINT de recherche de pseudo et email",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exemples:
-  %(prog)s username123
-  %(prog)s john_doe --format json --output rapport.json
+  %(prog)s username123                    Recherche par pseudo
+  %(prog)s --email test@example.com       Recherche par email
+  %(prog)s john_doe --format json         Export JSON
   %(prog)s test_user --timeout 15 --concurrent 5
         """
     )
     
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
         "username",
+        nargs="?",
         help="Le pseudo à rechercher"
+    )
+    group.add_argument(
+        "-e", "--email",
+        help="L'adresse email à analyser"
     )
     parser.add_argument(
         "-f", "--format",
@@ -845,8 +854,8 @@ Exemples:
     
     args = parser.parse_args()
     
-    # Bannière
-    if not args.quiet:
+    # Mode recherche par email
+    if args.email:
         print(f"""
 {Fore.CYAN}
 ██████╗ ███████╗███████╗████████╗    ██████╗ ██████╗ ███████╗██████╗ 
@@ -856,7 +865,43 @@ Exemples:
 ██║  ██║███████╗███████║   ██║       ██║     ██║  ██║███████╗██║  ██║
 ╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝       ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
 {Style.RESET_ALL}
-{Fore.YELLOW}Outil OSINT de recherche de pseudo - v1.0{Style.RESET_ALL}
+{Fore.YELLOW}Outil OSINT de recherche de pseudo et email - v2.0{Style.RESET_ALL}
+{Fore.YELLOW}Créé pour des fins éducatives et de sécurité légitime{Style.RESET_ALL}
+        """)
+        
+        scanner = EmailScanner(args.email, timeout=args.timeout)
+        
+        try:
+            success = asyncio.run(scanner.run_scan())
+            if success:
+                # Sauvegarder le rapport
+                if not args.no_save:
+                    filename = scanner.save_report(args.output, args.format)
+                    print(f"\n{Fore.GREEN}📄 Rapport sauvegardé: {filename}{Style.RESET_ALL}")
+                
+                # Afficher les résultats
+                print("\n" + scanner.generate_report("text"))
+        except KeyboardInterrupt:
+            print(f"\n{Fore.YELLOW}Recherche interrompue par l'utilisateur{Style.RESET_ALL}")
+            sys.exit(0)
+        except Exception as e:
+            print(f"{Fore.RED}Erreur lors de la recherche: {e}{Style.RESET_ALL}")
+            sys.exit(1)
+        
+        print(f"\n{Fore.CYAN}Merci d'avoir utilisé ReconScan!{Style.RESET_ALL}")
+        return
+    
+    # Mode recherche par pseudo (existant)
+    print(f"""
+{Fore.CYAN}
+██████╗ ███████╗███████╗████████╗    ██████╗ ██████╗ ███████╗██████╗ 
+██╔══██╗██╔════╝██╔════╝╚══██╔══╝    ██╔══██╗██╔══██╗██╔════╝██╔══██╗
+██████╔╝█████╗  ███████╗   ██║       ██████╔╝██████╔╝█████╗  ██████╔╝
+██╔══██╗██╔══╝  ╚════██║   ██║       ██╔═══╝ ██╔══██╗██╔══╝  ██╔══██╗
+██║  ██║███████╗███████║   ██║       ██║     ██║  ██║███████╗██║  ██║
+╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝       ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+{Style.RESET_ALL}
+{Fore.YELLOW}Outil OSINT de recherche de pseudo et email - v2.0{Style.RESET_ALL}
 {Fore.YELLOW}Créé pour des fins éducatives et de sécurité légitime{Style.RESET_ALL}
         """)
     
